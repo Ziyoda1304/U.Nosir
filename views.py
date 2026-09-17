@@ -5,7 +5,7 @@ from collections import Counter
 import os, re
 
 from django.utils.safestring import mark_safe
-from .models import Biography, Work, Feedback
+from models import Biography, Work, Feedback
 
 # O‘zbek tili uchun asosiy stopwords ro‘yxati
 UZB_STOPWORDS = {
