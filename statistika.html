@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Statistika | Usmon Nosir Korpusi</title>
+  <style>
+    :root{
+      --bg:#f7fbff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --brand1:#ff512f;
+      --brand2:#dd2476;
+      --card:rgba(255,255,255,.92);
+      --r:22px;
+      --shadow: 0 24px 60px rgba(0,0,0,.14);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 20% 0%, rgba(255,81,47,.12), transparent 55%),
+        radial-gradient(900px 420px at 80% 0%, rgba(221,36,118,.12), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .nav{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.65);
+      border-bottom:1px solid rgba(15,23,42,.08);
+    }
+    .nav-inner{
+      max-width:1100px; margin:0 auto; padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:950;}
+    .logo{
+      width:40px; height:40px; border-radius:16px; display:grid; place-items:center;
+      color:#fff; font-weight:900;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 14px 34px rgba(221,36,118,.22);
+    }
+    .links{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .links a{
+      padding:10px 12px; border-radius:14px; font-weight:900;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.55);
+      transition:.18s;
+    }
+    .links a:hover{transform:translateY(-1px)}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:22px 16px 60px;}
+    .card{
+      background: var(--card);
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    h1{margin:0 0 10px; color: var(--brand1); letter-spacing:-.5px}
+    .sub{margin:0 0 16px; color: var(--muted); font-weight:650; line-height:1.55}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 800px){ .grid{grid-template-columns:1fr} }
+    .stat{
+      border-radius:18px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.70);
+      padding: 16px;
+    }
+    .k{color: rgba(15,23,42,.55); font-weight:900; font-size:12px}
+    .v{font-size:28px; font-weight:950; margin-top:6px}
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      overflow:hidden;
+      border-radius: 16px;
+    }
+    th, td{
+      padding: 12px 10px;
+      border-bottom:1px solid rgba(15,23,42,.08);
+      text-align:left;
+      font-weight:800;
+    }
+    th{background: rgba(255,81,47,.10)}
+    td{color: rgba(15,23,42,.82)}
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><div class="logo">UN</div>Statistika</div>
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+        <a href="/qidiruv/">Qidiruv</a>
+        <a href="/aloqa/">Aloqa</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Umumiy statistika</h1>
+      <p class="sub">Korpus bo‘yicha soddalashtirilgan hisob-kitoblar.</p>
+
+      <div class="grid">
+        <div class="stat">
+          <div class="k">📚 Asarlar soni</div>
+          <div class="v">{{ works_count }}</div>
+        </div>
+        <div class="stat">
+          <div class="k">🧩 Tokenlar (so‘zlar) soni</div>
+          <div class="v">{{ total_tokens }}</div>
+        </div>
+      </div>
+
+      <div class="stat" style="margin-top:14px;">
+        <div class="k">🔥 Eng ko‘p uchragan 20 ta so‘z</div>
+        <table>
+          <thead>
+            <tr>
+              <th>So‘z</th>
+              <th>Chastota</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for w, c in top_words %}
+              <tr>
+                <td>{{ w }}</td>
+                <td>{{ c }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="2">Hozircha hisoblash uchun matn topilmadi.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

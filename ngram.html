@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>N-gram | Korpus</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f6f7fb;
+margin:0;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#dd2476;
+}
+
+form{
+margin-top:20px;
+}
+
+input{
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+width:80px;
+}
+
+button{
+padding:10px 14px;
+background:#ff512f;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+td,th{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>N-gram statistika</h1>
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+      </div>
+
+<form method="GET">
+
+<label>N qiymati:</label>
+
+<input type="number" name="n" value="{{ n }}">
+
+<button type="submit">
+Hisoblash
+</button>
+
+</form>
+
+<table>
+
+<tr>
+<th>N-gram</th>
+<th>Chastota</th>
+</tr>
+
+<!-- Birikma (gram) va sonini (count) alohida ko‘rsatadi-->
+{% for gram,count in result %}
+
+<tr>
+
+<td>
+{{ gram|join:" " }}
+</td>
+
+<td>
+{{ count }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

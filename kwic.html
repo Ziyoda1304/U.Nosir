@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>KWIC | Korpus</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f6f7fb;
+margin:0;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#dd2476;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+td,th{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.left{
+text-align:right;
+color:#555;
+}
+
+.word{
+font-weight:bold;
+color:#dd2476;
+}
+
+.right{
+color:#444;
+}
+
+.title{
+font-size:12px;
+color:#999;
+}
+
+form{
+margin-top:20px;
+}
+
+input{
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 14px;
+background:#ff512f;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>KWIC sahifasi</h1>
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+      </div>
+
+<form method="GET" action="{% url 'kwic' %}" style="margin-bottom: 20px;">
+    <input type="text" name="q" value="{{ q }}" placeholder="So‘zni kiriting..." class="search-input">
+    
+    <div style="margin-top: 10px;">
+        <button type="submit" name="taraf" value="chap" class="btn {% if taraf == 'chap' %}active{% endif %}">Chap kontekst</button>
+        <button type="submit" name="taraf" value="ong" class="btn {% if taraf == 'ong' %}active{% endif %}">O‘ng kontekst</button>
+        <button type="submit" name="taraf" value="ikkala" class="btn {% if taraf == 'ikkala' %}active{% endif %}">Ikkala taraf</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            {% if taraf == 'chap' or taraf == 'ikkala' %}
+                <th style="text-align: right;">Chap kontekst</th>
+            {% endif %}
+            
+            <th style="text-align: center;">So‘z</th>
+            
+            {% if taraf == 'ong' or taraf == 'ikkala' %}
+                <th style="text-align: left;">O‘ng kontekst</th>
+            {% endif %}
+            
+            <th>Asar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for line in lines %}
+        <tr>
+            {% if taraf == 'chap' or taraf == 'ikkala' %}
+                <td style="text-align: right;">{{ line.left }}</td>
+            {% endif %}
+            
+            <td style="text-align: center; color: #e91e63; font-weight: bold;">{{ line.word }}</td>
+            
+            {% if taraf == 'ong' or taraf == 'ikkala' %}
+                <td style="text-align: left;">{{ line.right }}</td>
+            {% endif %}
+            
+            <td style="color: #999; font-size: 0.85em;">{{ line.title }}</td>
+        </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Ma’lumot topilmadi.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+</body>
+</html>
+

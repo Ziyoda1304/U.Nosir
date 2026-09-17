@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Collocation</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f6f7fb;
+margin:0;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#dd2476;
+}
+
+form{
+margin-top:20px;
+}
+
+input{
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 14px;
+background:#ff512f;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+td,th{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.word{
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Collocation (yonma so‘zlar) sahifasi</h1>
+
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+      </div>
+<form method="GET">
+<input type="text" name="q" value="{{ q }}" placeholder="So‘z kiriting">
+<button type="submit">Qidirish</button>
+</form>
+
+<table>
+
+<tr>
+<th>So‘z</th>
+<th>Chastota</th>
+</tr>
+
+{% for word,count in collocations %}
+
+<tr>
+
+<td class="word">
+{{ word }}
+</td>
+
+<td>
+{{ count }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

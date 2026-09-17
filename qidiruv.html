@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qidiruv | Usmon Nosir Korpusi</title>
+  <style>
+    :root{
+      --bg:#f7f7ff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --brand1:#ff512f;
+      --brand2:#dd2476;
+      --card:rgba(255,255,255,.92);
+      --r:22px;
+      --shadow: 0 24px 60px rgba(0,0,0,.14);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 15% 10%, rgba(221,36,118,.14), transparent 60%),
+        radial-gradient(900px 420px at 85% 0%, rgba(255,81,47,.14), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    a{color:inherit; text-decoration:none}
+    .nav{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.65);
+      border-bottom:1px solid rgba(15,23,42,.08);
+    }
+    .nav-inner{
+      max-width:1100px; margin:0 auto; padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:950;}
+    .logo{
+      width:40px; height:40px; border-radius:16px; display:grid; place-items:center;
+      color:#fff; font-weight:900;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 14px 34px rgba(221,36,118,.22);
+    }
+    .links{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .links a{
+      padding:10px 12px; border-radius:14px; font-weight:900;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.55);
+      transition:.18s;
+    }
+    .links a:hover{transform:translateY(-1px)}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:22px 16px 60px;}
+    .card{
+      background: var(--card);
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    h1{margin:0 0 10px; color: var(--brand1); letter-spacing:-.5px}
+    .sub{margin:0 0 16px; color: var(--muted); font-weight:650; line-height:1.55}
+
+    form{display:grid; grid-template-columns: 1fr 160px; gap:10px; margin-top:14px}
+    @media (max-width:700px){ form{grid-template-columns:1fr} }
+    input{
+      width:100%; padding:14px 16px; border-radius: 16px;
+      border:1px solid rgba(15,23,42,.12);
+      outline:none; font-weight:800;
+      background: rgba(255,255,255,.85);
+    }
+    button{
+      border:none; cursor:pointer;
+      border-radius: 16px;
+      font-weight:950;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      color:white;
+      box-shadow: 0 14px 30px rgba(221,36,118,.20);
+      transition:.18s;
+    }
+    button:hover{transform:translateY(-2px)}
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border-radius: 999px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.55);
+      font-weight:900; color: rgba(15,23,42,.75);
+      margin-top: 12px;
+    }
+    .result{
+      margin-top:16px;
+      display:grid;
+      gap:12px;
+    }
+    .item{
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.70);
+      padding: 14px 16px;
+    }
+    .title{font-weight:950}
+    .meta{color:rgba(15,23,42,.55); font-weight:800; font-size:12px; margin-top:4px}
+
+    /* yangi topilgan so‘z ajralib turishi uchun */
+    mark.hit{
+      background:#ffeb3b;
+      color:#111;
+      padding: 0 .18em;
+      border-radius: .25em;
+    }
+    /* yangi gaplar blokini chiroyli qilish */
+    .ctx{
+      margin-top:8px;
+      color:rgba(15,23,42,.80);
+      font-weight:650;
+      line-height:1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><div class="logo">UN</div>Qidiruv</div>
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+        <a href="/statistika/">Statistika</a>
+        <a href="/aloqa/">Aloqa</a>
+        <a href="/ngram/">Ngram</a>
+        <a href="/collocation/">Yonma so‘zlar</a>
+        <a href="/kwic/">Chap-o‘ng kontekst</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Korpus qidiruvi</h1>
+      <p class="sub">
+        Asarlar ichidan so‘z yoki iborani qidiring. Natijalar asar bo‘yicha tartiblanadi.
+      </p>
+
+      <form method="GET">
+        <input type="text" name="q" value="{{ q }}" placeholder="Masalan: muhabbat, vatan, ko‘ngil..." />
+        <button type="submit">Qidirish</button>
+      </form>
+
+      <div class="pill">📚 Asarlar soni: {{ works_count }} &nbsp;|&nbsp; 🔎 Topilmalar: {{ total_hits }}</div>
+
+      <div class="result">
+        {% if q and results %}
+          {% for r in results %}
+            <div class="item">
+              <div class="title">📜 {{ r.title }}</div>
+              <div class="meta">Topildi: {{ r.hits }} marta</div>
+
+              <!--  topilgan gap(lar) chiqadi va so‘z bo‘yaladi -->
+              <div class="ctx">{{ r.snippet|safe }}</div>
+            </div>
+          {% endfor %}
+        {% elif q %}
+          <div class="item">
+            <div class="title">Hech narsa topilmadi!!!</div>
+            <div class="ctx">Boshqa so‘z bilan urinib ko‘ring yoki qisqaroq yozing!</div>
+          </div>
+        {% else %}
+          <div class="item">
+            <div class="title">Qidirishni boshlang...</div>
+            <div class="ctx">Qidiruv maydoniga so‘z/ibora kiriting: </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

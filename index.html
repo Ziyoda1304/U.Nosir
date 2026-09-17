@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Usmon Nosir</title>
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#475569;
+
+      --brand1:#ff512f;
+      --brand2:#dd2476;
+
+      --bg1:#ffd1dc;
+      --bg2:#ffe7d6;
+
+      --card: rgba(255,255,255,.82);
+      --card2: rgba(255,255,255,.72);
+
+      --shadow: 0 30px 90px rgba(0,0,0,.20);
+      --shadow2: 0 12px 30px rgba(0,0,0,.14);
+
+      --r: 28px;
+    }
+
+    *{box-sizing:border-box}
+    html, body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      overflow-x:hidden;
+
+      background:
+        radial-gradient(900px 480px at 10% 0%, rgba(221,36,118,.18), transparent 60%),
+        radial-gradient(900px 520px at 90% 10%, rgba(255,81,47,.18), transparent 62%),
+        radial-gradient(900px 600px at 50% 110%, rgba(16,185,129,.14), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
+    a{color:inherit; text-decoration:none}
+
+    /* NAV */
+    .nav{
+      position: sticky;
+      top:0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.45);
+      border-bottom: 1px solid rgba(15,23,42,.10);
+    }
+    .nav-inner{
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      font-weight: 950;
+      letter-spacing: .2px;
+      white-space: nowrap;
+    }
+    .logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 18px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight: 1000;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 16px 40px rgba(221,36,118,.22);
+      user-select:none;
+    }
+    .links{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .links a{
+      padding: 11px 14px;
+      border-radius: 16px;
+      font-weight: 900;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.55);
+      transition: .18s ease;
+    }
+    .links a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.72);
+    }
+
+    /* PAGES */
+    .page{display:none; animation: fade .35s ease;}
+    @keyframes fade{
+      from{opacity:0; transform: translateY(10px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+
+    /* HERO (no empty space) */
+    .hero{
+      min-height: calc(100vh - 74px);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding: 26px 18px 40px;
+    }
+
+    .hero-card{
+      width: min(1280px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: calc(var(--r) + 6px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(520px 320px at 12% 10%, rgba(255,81,47,.16), transparent 60%),
+        radial-gradient(520px 320px at 88% 0%, rgba(221,36,118,.16), transparent 60%),
+        radial-gradient(520px 360px at 60% 120%, rgba(16,185,129,.12), transparent 65%);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      position:relative;
+      padding: 26px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 980px){
+      .hero-inner{grid-template-columns:1fr;}
+    }
+
+    .panel{
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
+      padding: 22px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(16,185,129,.14);
+      border: 1px solid rgba(16,185,129,.22);
+      color: #065f46;
+      font-weight: 950;
+      letter-spacing: .2px;
+      font-size: 12px;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #16a34a;
+      box-shadow: 0 0 0 6px rgba(22,163,74,.10);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(38px, 3.4vw, 58px);
+      letter-spacing: -1px;
+      line-height: 1.05;
+      color: var(--brand1);
+    }
+    .sub{
+      margin: 0 0 16px;
+      color: rgba(15,23,42,.78);
+      line-height: 1.65;
+      font-weight: 750;
+      font-size: 16px;
+      max-width: 72ch;
+    }
+
+    .btns{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 15px 18px;
+      font-weight: 1000;
+      letter-spacing: .2px;
+      transition: .18s ease;
+      box-shadow: var(--shadow2);
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      user-select:none;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .btn.primary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.80);
+      border: 1px solid rgba(15,23,42,.12);
+      color: var(--ink);
+    }
+    .btn:hover{ transform: translateY(-2px); }
+
+    /* RIGHT PANEL */
+    .portrait{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items:center;
+    }
+    @media (max-width: 980px){
+      .portrait{grid-template-columns:1fr; text-align:center;}
+    }
+
+    .pimg{
+      display:flex; justify-content:center; align-items:center;
+    }
+
+    .pimg img{
+      width: 100%;
+      max-width: 260px;         
+      max-height: 260px;        
+      height: auto;
+      aspect-ratio: 1/1;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 8px solid rgba(255,255,255,.90);
+      box-shadow: 0 22px 55px rgba(0,0,0,.22);
+    }
+
+    @media (min-width: 1200px){
+      .pimg img{
+        max-width: 300px;
+        max-height: 300px;
+      }
+    }
+
+    .pinfo{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      justify-content:center;
+      align-items:flex-start;
+      min-width: 0;
+    }
+    @media (max-width: 980px){
+      .pinfo{align-items:center;}
+    }
+
+    .pname{
+      font-size: 30px;
+      font-weight: 1000;
+      letter-spacing: -.4px;
+      margin: 0;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .years{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(15,23,42,.10);
+      font-weight: 950;
+      color: rgba(15,23,42,.72);
+      width: fit-content;
+    }
+    .pdesc{
+      color: rgba(15,23,42,.72);
+      font-weight: 750;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .quick{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+      width: 100%;
+    }
+    @media (max-width: 520px){
+      .quick{grid-template-columns:1fr;}
+    }
+    .qbtn{
+      padding: 12px 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid rgba(15,23,42,.10);
+      font-weight: 950;
+      transition: .18s ease;
+      text-align:center;
+    }
+    .qbtn:hover{transform: translateY(-2px);}
+
+    /* SECTIONS */
+    .section-wrap{
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 22px 18px 70px;
+    }
+    .section-card{
+      background: var(--card2);
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .section-title{
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -.3px;
+    }
+    .bio-text{
+      color: rgba(15,23,42,.82);
+      line-height: 1.9;
+      font-weight: 650;
+      font-size: 16px;
+    }
+    .works-list{list-style:none; padding:0; margin:0;}
+    .works-list li{
+      margin: 12px 0;
+      padding: 15px 16px;
+      border-radius: 18px;
+      cursor:pointer;
+      background: linear-gradient(135deg, rgba(255,236,210,.95), rgba(252,182,159,.92));
+      border: 1px solid rgba(15,23,42,.08);
+      font-weight: 950;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      transition:.18s ease;
+    }
+    .works-list li:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0,0,0,.18);
+    }
+    .mini2{
+      font-size: 12px;
+      color: rgba(15,23,42,.55);
+      font-weight: 850;
+    }
+    .back-row{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-bottom: 14px;
+    }
+
+    /* MODAL (MODIFIED) */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.65);
+      justify-content:center;
+      align-items:center;
+      z-index: 999;
+      padding: 18px;
+    }
+    .modal-content{
+      width:min(980px, 100%);
+      max-height: 85vh;
+      overflow-y:auto;
+      background: rgba(255,255,255,.98);
+      border-radius: 22px;
+      box-shadow: 0 40px 90px rgba(0,0,0,.35);
+      border: 1px solid rgba(15,23,42,.10);
+      position:relative;
+      padding: 22px 22px 26px;
+    }
+    
+    /* Yangilangan Yopish tugmasi: skroll qilinganda ham joyida qotib turadi */
+    .close{
+      position: sticky;
+      top: 0px;
+      float: right;
+      z-index: 10;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      background: rgba(221,36,118,.9);
+      border: 1px solid rgba(221,36,118,.22);
+      font-weight: 1000;
+      color: #fff;
+      transition:.18s ease;
+      user-select:none;
+      box-shadow: 0 4px 12px rgba(221,36,118,0.3);
+    }
+    .close:hover{transform: scale(1.1); background: rgba(221,36,118,1);}
+    
+    pre{
+      white-space: pre-wrap;
+      font-family: "Times New Roman", serif;
+      font-size: 16px;
+      line-height: 1.95;
+      color: rgba(15,23,42,.9);
+      margin: 14px 0 0;
+      clear: both; /* Tugma bilan matn aralashib ketmasligi uchun */
+    }
+  </style>
+
+  <script>
+    function showPage(id){
+      document.querySelectorAll(".page").forEach(p => p.style.display="none");
+      document.getElementById(id).style.display="block";
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function openWork(title, text){
+      document.getElementById("workTitle").innerText = title;
+      document.getElementById("workText").innerText = text;
+      
+      const modal = document.getElementById("workModal");
+      modal.style.display = "flex";
+      
+      // Modal ichidagi skrollni har safar ochilganda eng tepaga qaytarish
+      modal.querySelector('.modal-content').scrollTop = 0;
+    }
+
+    function closeWork(){
+      document.getElementById("workModal").style.display = "none";
+    }
+
+    // Yangi qulayliklar yuklanganda ishga tushadi
+    document.addEventListener("DOMContentLoaded", function() {
+      const modal = document.getElementById("workModal");
+
+      // 1. Modal tashqarisiga (orqa fondagi bo'shliqqa) bosilganda yopish
+      modal.addEventListener("click", function(event) {
+        if (event.target === modal) {
+          closeWork();
+        }
+      });
+
+      // 2. Klaviaturadan 'Escape' (Esc) tugmasi bosilganda yopish
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape" && modal.style.display === "flex") {
+          closeWork();
+        }
+      });
+    });
+
+    window.onload = () => showPage("home");  
+  </script>
+</head>
+
+<body>
+
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">UN</div>
+        <div>Usmon Nosir</div>
+      </div>
+      <div class="links">
+        <a href="/">Bosh sahifa</a>
+        <a href="/qidiruv/">Qidiruv</a>
+        <a href="/statistika/">Statistika</a>
+        <a href="/aloqa/">Aloqa</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="home" class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-inner">
+
+          <div class="panel">
+            <span class="badge"><span class="dot"></span>Usmon Nosirning elektron korpus tizimi</span>
+            <p class="sub">
+              Shoir ijodining raqamli korpusi: asarlar, qidiruv, statistika va tahlilllar tizimini bir joydan topishingiz mumkin.
+            </p>
+
+            <div class="btns">
+              <button class="btn primary" onclick="showPage('bio')">📌 Hayoti va ijodi</button>
+              <button class="btn ghost" onclick="showPage('works')">📚 Asarlar</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="portrait">
+              <div class="pimg">
+                <img src="/static/usmon_nosir.jpg" alt="Usmon Nosir">
+              </div>
+
+              <div class="pinfo">
+                <div class="pname">Usmon Nosir</div>
+                <div class="years">1912-1944</div>
+                <div class="pdesc">
+                  O‘zbek adabiyotining yorqin vakillaridan biri. Shoirning hayoti, ijodi va asarlari korpus tizimida jamlangan.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="bio" class="page">
+    <div class="section-wrap">
+      <div class="section-card">
+        <div class="back-row">
+          <button class="btn ghost" onclick="showPage('home')">← Orqaga</button>
+          <a class="btn primary" href="/qidiruv/">🔎 Qidiruvga o‘tish</a>
+        </div>
+
+        <h2 class="section-title">Usmon Nosirning hayoti va ijodi</h2>
+
+        <div class="bio-text">
+          {% if biography %}
+            {% for line in biography.content.splitlines %}
+              {{ line }}<br>
+            {% endfor %}
+          {% else %}
+            Ma’lumot mavjud emas.
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="works" class="page">
+    <div class="section-wrap">
+      <div class="section-card">
+        <div class="back-row">
+          <button class="btn ghost" onclick="showPage('home')">← Orqaga</button>
+          <a class="btn primary" href="/qidiruv/">🔎 Asarlar ichidan qidirish</a>
+        </div>
+
+        <h2 class="section-title">Asarlar</h2>
+
+        <ul class="works-list">
+          {% for w in works_data %}
+            <li onclick="openWork('{{ w.title|escapejs }}', '{{ w.text|escapejs }}')">
+              <span>📜 {{ w.title }}</span>
+              <span class="mini2">Ochish →</span>
+            </li>
+          {% empty %}
+            <li><span>Asarlar mavjud emas.</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="workModal">
+    <div class="modal-content">
+      <div class="close" onclick="closeWork()">✖</div>
+      <h2 id="workTitle" class="section-title" style="margin-top:6px;"></h2>
+      <pre id="workText"></pre>
+    </div>
+  </div>
+
+</body>
+</html>
