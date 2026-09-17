@@ -5,6 +5,7 @@ class Biography(models.Model):
     content = models.TextField(verbose_name="Hayoti va ijodi")
 
     class Meta:
+        app_label = 'main'
         verbose_name = "Biografiya"
         verbose_name_plural = "Biografiya"
 
@@ -18,6 +19,7 @@ class Work(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        app_label = 'main'
         verbose_name = "Asar"
         verbose_name_plural = "Asarlar"
         ordering = ["-created_at"]
@@ -33,6 +35,7 @@ class Feedback(models.Model):
     created_at = models.DateTimeField("Yuborilgan vaqt", auto_now_add=True)
 
     class Meta:
+        app_label = 'main'
         verbose_name = "Fikr"
         verbose_name_plural = "Fikrlar"
         ordering = ["-created_at"]
